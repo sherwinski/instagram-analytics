@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-#from selenium.webdriver.common.action_chains import ActionChains
 import time
 import traceback
 import math
@@ -9,7 +8,6 @@ sys.path.insert(0, '../config/')
 import auth
 
 liked_by = []
-index = 1
 
 print("Working...")
 chrome_path = "/usr/local/Caskroom/chromedriver/2.41/chromedriver"
@@ -52,13 +50,11 @@ users_per_page = 12
 num_scrolls = int(math.ceil(num_scrolls))
 
 print "num_scrolls:", num_scrolls
-	#actions = ActionChains(driver)
 
 for index in range (users_per_page, (users_per_page*num_scrolls), users_per_page):
 	try:
 		print "index:",index
 		last_user = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/div[2]/ul/div/li["""+str(index)+"""]""")
-		#last_user.location_once_scrolled_into_view()
 		print "found user at li[",index,"]"
 		driver.execute_script("arguments[0].scrollIntoView();", last_user)
 		time.sleep(2)
@@ -66,21 +62,6 @@ for index in range (users_per_page, (users_per_page*num_scrolls), users_per_page
 		raise
 	else:
 		pass
-
-print "we've made it this far"
-	# like_modal = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/div[2]""") #/html/body/div[3]/div/div[2]/div/article/div[2]/div[2]/ul/div
-	# print "modal height:", like_modal.get_attribute("scrollHeight")
-
-	# like_modal_height = like_modal.get_attribute("scrollHeight")
-	# while True:
-	# 	#like_modal = like_modal.scroll(0,like_modal_height)	
-	# 	time.sleep(2)
-	# 	newHeight = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/div[2]""").get_attribute("scrollHeight")
-	# 	print "new height: ", newHeight
-	# 	if newHeight == like_modal_height:
-	# 		break
-	# 	like_modal_height = newHeight
-
 
 time.sleep(1)
 for index in range(1 , num_likes+1):
