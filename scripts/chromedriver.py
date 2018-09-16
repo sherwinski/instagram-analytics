@@ -59,6 +59,7 @@ for index in range (posts_per_page, (posts_per_page*page_scrolls), 2):
 
 # first post
 #driver.find_element_by_xpath("""/html/body/span/section/main/div/div[2]/article/div[1]/div/div[1]/div[1]""").click()
+
 time.sleep(2)
 
 # button for modal showing likes
@@ -70,15 +71,18 @@ likes_expand.click()
 
 # first user to like
 time.sleep(2)
+
 users_per_page = 12
 num_scrolls = num_likes / float(users_per_page)
 num_scrolls = int(math.ceil(num_scrolls))
 
 print "num_scrolls:", num_scrolls
 
+
 # scrolling to the bottom of the modal reveals the next 12 users who liked the post
 # by scrolling ceiling(n/12) times, where n is the number of likes, we can reveal
 # all n usernames 
+
 for index in range (users_per_page, (users_per_page*num_scrolls), users_per_page):
 	try:
 		print "index:",index
@@ -91,7 +95,9 @@ for index in range (users_per_page, (users_per_page*num_scrolls), users_per_page
 	else:
 		pass
 
+
 # read and store each username found under the like modal
+
 time.sleep(1)
 for index in range(1 , num_likes+1):
 	print "index:", index
