@@ -8,8 +8,9 @@ import traceback
 import math
 from datetime import datetime
 import sys
-sys.path.insert(0, '../instagram-analytics/config')
+sys.path.insert(0, '../../config')
 import auth
+import path
 # import auth2
 
 try:
