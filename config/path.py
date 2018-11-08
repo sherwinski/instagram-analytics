@@ -1,1 +1,1 @@
-driverPath = "/usr/local/bin/chromedriver
+driverPath = "/usr/local/bin/chromedriver"
