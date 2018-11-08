@@ -117,7 +117,7 @@ try:
        likes_expand_text = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/section[2]/div/button/span""")
        likes_expand_text = likes_expand_text.text
        num_likes = int(likes_expand_text.split()[0])
-       print "num_likes: " , num_likes
+       print("num_likes: " , num_likes)
        likes_expand = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/section[2]/div/button""")
        likes_expand.click() 
        ScanLikes(num_likes)
@@ -131,9 +131,9 @@ try:
         for index in range (users_per_page, (users_per_page*num_scrolls), users_per_page):
             try:
                 time.sleep(3)
-                print "index:",index
+                print("index:",index)
                 last_user = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/div[2]/ul/div/li["""+str(index)+"""]""")
-                print "found user at li[",index,"]"
+                print("found user at li[",index,"]")
                 driver.execute_script("arguments[0].scrollIntoView();", last_user)
             except Exception as e:
                 raise
@@ -146,9 +146,9 @@ try:
         print(num_likes," Likes Shown, ",actualLikes," Actually Available")
         # scans all users by name and stores in data struct
         for index in range(1 , actualLikes+1):
-            print "index:", index
+            print("index:", index)
             userName = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/div[2]/ul/div/li["""+str(index)+"""]/div/div[1]/div/div[1]/a""")
-            print "adding user " + userName.text
+            print("adding user " + userName.text)
             if userName.text not in LikeCount:
                 print(userName.text, "not here")
                 LikeCount[userName.text] = 1

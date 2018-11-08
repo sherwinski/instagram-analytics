@@ -2,3 +2,5 @@ config/auth.py
 config/auth.pyc
 config/path.py
 config/path.py
+config/__pycache__/path.cpython-37.pyc
+config/__pycache__/auth.cpython-37.pyc
