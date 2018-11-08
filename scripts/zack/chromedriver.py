@@ -16,7 +16,7 @@ import path
 try:
 #if 1==1:
     TargetUser = 'cooooooooooochieeee'
-    chrome_path = "/usr/local/Caskroom/chromedriver/2.41/chromedriver"
+    chrome_path = path.driverPath
     driver = webdriver.Chrome(chrome_path)
     # driver.maximize_window()
     driver.set_window_position(0,0)
@@ -142,15 +142,19 @@ try:
 
         time.sleep(1)
 
+        actualLikes = len(browser.find_elements_by_css_selector(ProfCodes.likeList + " li"))
+        print(num_likes," Likes Shown, ",actualLikes," Actually Available")
         # scans all users by name and stores in data struct
-        for index in range(1 , num_likes+1):
+        for index in range(1 , actualLikes+1):
             print "index:", index
             userName = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/div[2]/ul/div/li["""+str(index)+"""]/div/div[1]/div/div[1]/a""")
             print "adding user " + userName.text
             if userName.text not in LikeCount:
                 print(userName.text, "not here")
+                LikeCount[userName.text] = 1
             else:
                 print("other stuff happening")
+                LikeCount[userName.text] += 1
             #RowDict.append((userName.text).encode("utf-8"))
             likedBy.append((userName.text).encode("utf-8"))
 
