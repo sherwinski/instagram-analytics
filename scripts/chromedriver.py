@@ -149,16 +149,21 @@ try:
             #LastOldRow.click()
 
             for iterator in CurrentRows:
-                iterator.click()
-                AccessLikeModal()
+                for pic in iterator.find_elements_by_css_selector(ProfCodes.pic):
+                    pic.click()
+                    #  print("Pic info: ", pic.find_element_by_css_selector("a").get_attribute("href").split("/")[4])
+                    AccessLikeModal()
+                    ExitButton = driver.find_elements_by_xpath("""/html/body/div[3]/div/button""")
+                    ExitButton[0].click()
+
             #ScanLikes()
 
             #exit out from individual post by clicking close botton
-                ExitButton = driver.find_elements_by_xpath("""/html/body/div[3]/div/button""")
+
             #print(ExitButton)
             #if(not ExitButton.isEmpty()):
                 
-                ExitButton[0].click()
+                
             
             time.sleep(3)
             NewRows = browser.find_elements_by_css_selector(ProfCodes.row)
