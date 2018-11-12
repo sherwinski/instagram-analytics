@@ -78,6 +78,23 @@ try:
         rowFull = "Nnq7C weEfm"
         followerList = ".jSC57 .PZuss"
         likeList = ".D7Y-g .PZuss"
+        likeUserName = ".FPmhX"
+    
+
+    def InitLikeCounter(Followers):
+        
+        for Follower in Followers:
+            LikeCount[Follower] = 0
+
+    def AccessLikeModal():
+       time.sleep(3)
+       likes_expand_text = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/section[2]/div/button/span""")
+       likes_expand_text = likes_expand_text.text
+       num_likes = int(likes_expand_text.split()[0])
+       print "num_likes: " , num_likes
+       likes_expand = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/section[2]/div/button""")
+       likes_expand.click() 
+       ScanLikes(num_likes)
 
     def GetFollowers():
         FollowersOpen = browser.find_element_by_css_selector("[href='/"+TargetUser+"/followers/']").click()
@@ -106,21 +123,6 @@ try:
         ExitButton.click()
         return YourFollowers
 
-    def InitLikeCounter(Followers):
-        
-        for Follower in Followers:
-            LikeCount[Follower] = 0
-
-    def AccessLikeModal():
-       time.sleep(3)
-       likes_expand_text = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/section[2]/div/button/span""")
-       likes_expand_text = likes_expand_text.text
-       num_likes = int(likes_expand_text.split()[0])
-       print "num_likes: " , num_likes
-       likes_expand = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/section[2]/div/button""")
-       likes_expand.click() 
-       ScanLikes(num_likes)
-
     def ScanLikes(num_likes):
         users_per_page = 12
         num_scrolls = num_likes / float(users_per_page)
@@ -141,19 +143,39 @@ try:
 
         time.sleep(1)
 
+        LastUserName = "NoUser"
+        OldLastUser = ""
+        while LastUserName != OldLastUser:
+            LastUser = browser.find_element_by_css_selector(ProfCodes.likeUserName + " li:last-child")
+            if LastUserName != OldLastUser:
+                print("New One")
+            ScrollLast = browser.execute_script("document.querySelector('"+ProfCodes.likeUserName+" li:last-child').scrollIntoView()")
+            #print(LastUser.text)
+            time.sleep(2)
+            OldLastUser = LastUserName
+            LastUserName = browser.find_element_by_css_selector(ProfCodes.likeUserName + " li:last-child div div div div a").text
+            print(OldLastUser + " " + LastUserName)
+
+            YourFollowers = []
+            for Follower in browser.find_elements_by_css_selector(ProfCodes.likeUserName + " li"):
+                FollowerName = Follower.find_element_by_css_selector(".d7ByH a").text #xpath(".//div/div/div[1]/div/a").text
+                YourFollowers.append(FollowerName)
+
+        print(str(len(YourFollowers))+" likes scanned")
+
         # scans all users by name and stores in data struct
+        '''
         for index in range(1 , num_likes+1):
             print "index:", index
             userName = driver.find_element_by_xpath("""/html/body/div[3]/div/div[2]/div/article/div[2]/div[2]/ul/div/li["""+str(index)+"""]/div/div[1]/div/div[1]/a""")
             print "adding user " + userName.text
             if userName.text not in LikeCount:
-                print(userName.text, "not here")
+                LikeCount[userName.text] = 1
             else:
-                print("other stuff happening")
-            #RowDict.append((userName.text).encode("utf-8"))
-            likedBy.append((userName.text).encode("utf-8"))
-
-        print("Done adding users")
+                LikeCount[userName.text] += 1
+            #likedBy.append((userName.text).encode("utf-8"))
+        '''
+        print("...Done adding users")
 
     def AssignRows(CurrentRows):
         print("Begin assigning rows...")
